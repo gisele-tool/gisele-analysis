@@ -16,5 +16,9 @@ module Gisele::Analysis
       @bdd = cudd_manager.interface(:BDD).new_var(self)
     end
 
+    def to_dnf
+      name.to_s
+    end
+
   end # class Variable
 end # module Gisele

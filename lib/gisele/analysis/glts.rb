@@ -10,6 +10,11 @@ module Gisele::Analysis
       super()
     end
 
+    def add_state(data = {})
+      data[:accepting] = true
+      super
+    end
+
     def connect(from, to, data)
       data[:symbol] ||= data[:event] || GUARD_SYMBOL
       data[:bdd]    ||= session.bdd(data[:guard] || true)
@@ -51,3 +56,4 @@ module Gisele::Analysis
 
   end # class Glts
 end # module Gisele
+require_relative 'glts/eclosure'

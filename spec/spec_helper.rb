@@ -18,6 +18,10 @@ module SpecHelpers
     session(*args).bdd_interface
   end
 
+  def bdd(*args)
+    session.bdd(*args)
+  end
+
 end
 
 RSpec.configure do |c|
