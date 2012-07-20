@@ -2,14 +2,9 @@ require 'spec_helper'
 module Gisele::Analysis
   describe Session, 'bdd' do
 
-    before(:all) do
-      session.fluent :moving, [:start], [:stop]
-      session.fluent :closed, [:close], [:open]
-    end
-
-    subject{ session.bdd(expr) }
-
-    let(:moving_bdd){ session.variable(:moving).bdd }
+    let(:s){ session(true) }
+    let(:moving_bdd){ s.variable(:moving).bdd }
+    subject{ s.bdd(expr) }
 
     context 'on a BDD' do
       let(:expr){ moving_bdd }
@@ -30,7 +25,7 @@ module Gisele::Analysis
     end
 
     context 'on a Variable (variable name)' do
-      let(:expr){ session.variable(:moving) }
+      let(:expr){ s.variable(:moving) }
 
       it{ should eq(moving_bdd) }
     end

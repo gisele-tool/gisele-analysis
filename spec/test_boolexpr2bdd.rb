@@ -2,17 +2,13 @@ require 'spec_helper'
 module Gisele::Analysis
   describe Boolexpr2BDD do
 
+    let(:s){ session(true) }
     let(:parsed){ Gisele.parse(expr, :root => :bool_expr) }
     let(:sexpr) { Gisele.sexpr(parsed)                    }
 
     subject{
-      Boolexpr2BDD.new(session).call(sexpr) 
+      Boolexpr2BDD.new(s).call(sexpr)
     }
-
-    before(:all) do
-      session.fluent :moving, [:start], [:stop]
-      session.fluent :closed, [:close], [:open]
-    end
 
     context "on 'true'" do
       let(:expr){ "true" }
@@ -29,7 +25,7 @@ module Gisele::Analysis
     context "on 'moving'" do
       let(:expr){ "moving" }
       
-      it { should eq(session.variable(:moving).bdd) }
+      it { should eq(s.variable(:moving).bdd) }
     end
 
     context "on 'foo'" do
@@ -45,19 +41,19 @@ module Gisele::Analysis
     context "on 'not(moving)'" do
       let(:expr){ "not(moving)" }
       
-      it { should eq(!session.variable(:moving).bdd) }
+      it { should eq(!s.variable(:moving).bdd) }
     end
 
     context "on 'moving and closed'" do
       let(:expr){ "moving and closed" }
       
-      it { should eq(session.variable(:moving).bdd & session.variable(:closed).bdd) }
+      it { should eq(s.variable(:moving).bdd & s.variable(:closed).bdd) }
     end
 
     context "on 'moving or closed'" do
       let(:expr){ "moving or closed" }
       
-      it { should eq(session.variable(:moving).bdd | session.variable(:closed).bdd) }
+      it { should eq(s.variable(:moving).bdd | s.variable(:closed).bdd) }
     end
 
 

@@ -3,12 +3,19 @@ require 'gisele-analysis'
 
 module SpecHelpers
 
-  def session
-    @session ||= Gisele::Analysis::Session.new
+  def session(with_vars = false)
+    @session ||= begin
+      s = Gisele::Analysis::Session.new
+      if with_vars
+        s.fluent :moving, [:start], [:stop]
+        s.fluent :closed, [:close], [:open]
+      end
+      s
+    end
   end
 
-  def bddi
-    session.cudd_manager.interface(:BDD)
+  def bddi(*args)
+    session(*args).bdd_interface
   end
 
 end
