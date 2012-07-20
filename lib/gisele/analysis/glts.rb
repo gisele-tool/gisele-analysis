@@ -51,7 +51,7 @@ module Gisele::Analysis
     def self.edge_label(e)
       event   = e[:event]
       guard   = e[:guard] && "[#{e[:guard]}]"
-      [event, guard].compact.map(&:to_s).join(' / ')
+      [guard, event].compact.map(&:to_s).join(' / ')
     end
 
   end # class Glts
