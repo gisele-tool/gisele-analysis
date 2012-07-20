@@ -22,7 +22,7 @@ module Gisele::Analysis
     end
 
     def to_dot
-      super &DOT_REWRITER
+      super false, &DOT_REWRITER
     end
 
     DOT_REWRITER = lambda{|elm,kind|

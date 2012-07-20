@@ -1,12 +1,13 @@
 module Gisele::Analysis
   class Glts
     class Eclosure < Stamina::Utils::Decorate
+      include Session::Utils
 
       EMPTY = {}.freeze
 
       def initialize(session)
         super(:eclosure)
-        @one = session.bdd_interface.one
+        @session = session
       end
 
       def suppremum(d0, d1)
@@ -26,7 +27,7 @@ module Gisele::Analysis
       end
 
       def init_deco(s)
-        {s => @one}
+        {s => one}
       end
 
       def take_at_start?(s)

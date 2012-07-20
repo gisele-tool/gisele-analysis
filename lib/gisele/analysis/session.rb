@@ -62,3 +62,4 @@ module Gisele::Analysis
 
   end # class Session
 end # module Gisele
+require_relative 'session/utils'

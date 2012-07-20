@@ -1,13 +1,12 @@
 module Gisele::Analysis
   class Boolexpr2BDD < Sexpr::Processor
+    include Session::Utils
 
     attr_reader :session
-    attr_reader :bddi
 
     def initialize(session, options = {})
       super(options)
       @session = session
-      @bddi    = session.cudd_manager.interface(:BDD)
     end
 
     def on_bool_expr(sexpr)
@@ -16,19 +15,19 @@ module Gisele::Analysis
 
     def on_bool_not(sexpr)
       with_bdd_apply(sexpr[1..-1]) do |bdd|
-        bddi.not(bdd)
+        bdd_interface.not(bdd)
       end
     end
 
     def on_bool_and(sexpr)
       with_bdd_apply(sexpr[1..-1]) do |left, right|
-        bddi.and(left, right)
+        bdd_interface.and(left, right)
       end
     end
 
     def on_bool_or(sexpr)
       with_bdd_apply(sexpr[1..-1]) do |left, right|
-        bddi.or(left, right)
+        bdd_interface.or(left, right)
       end
     end
 
@@ -37,7 +36,7 @@ module Gisele::Analysis
     end
 
     def on_bool_lit(sexpr)
-      sexpr.last ? bddi.one : bddi.zero
+      sexpr.last ? one : zero
     end
 
   private
