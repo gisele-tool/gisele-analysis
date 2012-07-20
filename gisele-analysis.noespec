@@ -1,6 +1,9 @@
 template-info:
   name: "rubygem.noe"
-  version: 1.7.4
+  version: 2.0.0
+  manifest:
+    lib/__lower__/version.rb:
+      ignore: true
 variables:
   lower:
     gisele-analysis
@@ -14,12 +17,13 @@ variables:
     This project implements the formal analysis techniques available on the
     gisele process modeling language.
   authors:
-    - {name: Bernard Lambeau, email: blambeai@gmail.com}
+    - {name: Bernard Lambeau, email: blambeau@gmail.com}
   links:
     - https://github.com/blambeau/gisele-analysis
   dependencies:
-    - {name: rake,         version: "~> 0.9.2",  groups: [development]}
-    - {name: rspec,        version: "~> 2.11",   groups: [development]}
-    - {name: stamina-core, version: "~> 0.5.4",  groups: [runtime]}
-    - {name: cudd-rb,      version: "~> 0.1.0",  groups: [runtime]}
+    - {name: rake,            version: "~> 0.9.2",  groups: [development]}
+    - {name: rspec,           version: "~> 2.11",   groups: [development]}
+    - {name: gisele-language, version: "~> 0.5.0",  groups: [runtime]}
+    - {name: stamina-core,    version: "~> 0.5.4",  groups: [runtime]}
+    - {name: cudd-rb,         version: "~> 0.1.0",  groups: [runtime]}
 

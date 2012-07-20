@@ -64,7 +64,7 @@ Gem::Specification.new do |s|
   #
   # NOTE: Somewhat strangly this attribute is always singular!
   #       Don't replace by s.emails = ...
-  s.email  = ["blambeai@gmail.com"]
+  s.email  = ["blambeau@gmail.com"]
 
   ################################################################### PATHS, FILES, BINARIES
 
@@ -125,6 +125,7 @@ Gem::Specification.new do |s|
   #
   s.add_development_dependency("rake", "~> 0.9.2")
   s.add_development_dependency("rspec", "~> 2.11")
+  s.add_dependency("gisele-language", "~> 0.5.0")
   s.add_dependency("stamina-core", "~> 0.5.4")
   s.add_dependency("cudd-rb", "~> 0.1.0")
 

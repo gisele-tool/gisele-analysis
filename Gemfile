@@ -6,6 +6,7 @@ group :development do
 end
 
 group :runtime do
+  gem "gisele-language", "~> 0.5.0"
   gem "stamina-core", "~> 0.5.4"
   gem "cudd-rb", :path => "../cudd-rb"
 end
