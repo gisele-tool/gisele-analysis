@@ -17,6 +17,18 @@ module Gisele::Analysis
       it{ should eq(moving_bdd) }
     end
 
+    context 'on true' do
+      let(:expr){ true }
+
+      it{ should eq(bddi.one) }
+    end
+
+    context 'on false' do
+      let(:expr){ false }
+
+      it{ should eq(bddi.zero) }
+    end
+
     context 'on a Variable (variable name)' do
       let(:expr){ session.variable(:moving) }
 
