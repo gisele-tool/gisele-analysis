@@ -7,11 +7,14 @@ module SpecHelpers
     @session ||= Gisele::Analysis::Session.new
   end
 
+  def bddi
+    session.cudd_manager.interface(:BDD)
+  end
+
 end
 
 RSpec.configure do |c|
   c.include SpecHelpers
 
   c.after(:all){ @session.close if @session }
-
 end

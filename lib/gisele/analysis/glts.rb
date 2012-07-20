@@ -1,13 +1,11 @@
-module Gisele
-  module Analysis
-    class Glts
+module Gisele::Analysis
+  class Glts
 
-      def initialize(session)
-        @session = session
-        @automaton = Stamina::Automaton.new
-        yield(self) if block_given?
-      end
+    def initialize(session)
+      @session = session
+      @automaton = Stamina::Automaton.new
+      yield(self) if block_given?
+    end
 
-    end # class Glts
-  end # module Analysis
+  end # class Glts
 end # module Gisele

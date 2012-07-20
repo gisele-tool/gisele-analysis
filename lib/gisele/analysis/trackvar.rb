@@ -1,14 +1,12 @@
-module Gisele
-  module Analysis
-    class Trackvar < Variable
+module Gisele::Analysis
+  class Trackvar < Variable
 
-      attr_reader :update_events
+    attr_reader :update_events
 
-      def initialize(session, name, update_events, initially)
-        super(session, name, initially)
-        @update_events = update_events
-      end
+    def initialize(session, name, update_events, initially)
+      super(session, name, initially)
+      @update_events = update_events
+    end
 
-    end # class Fluent
-  end # module Analysis
+  end # class Trackvar
 end # module Gisele

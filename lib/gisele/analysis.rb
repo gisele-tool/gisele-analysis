@@ -14,5 +14,5 @@ require "gisele/analysis/variable"
 require "gisele/analysis/fluent"
 require "gisele/analysis/trackvar"
 require "gisele/analysis/glts"
+require "gisele/analysis/boolexpr2bdd"
 require "gisele/analysis/session"
-
