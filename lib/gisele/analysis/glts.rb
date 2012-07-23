@@ -58,3 +58,4 @@ module Gisele::Analysis
 end # module Gisele
 require_relative 'glts/eclosure'
 require_relative 'glts/determinize'
+require_relative 'glts/equivalence'
