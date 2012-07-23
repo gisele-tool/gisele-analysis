@@ -17,7 +17,7 @@ module Gisele::Analysis
 
     def connect(from, to, data)
       data[:symbol] ||= data[:event] || GUARD_SYMBOL
-      data[:bdd]    ||= session.bdd(data[:guard] || true)
+      data[:bdd]    ||= session.bdd(data[:guard] || true).ref
       super(from, to, data)
     end
 
