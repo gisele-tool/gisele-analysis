@@ -2,14 +2,12 @@ require 'spec_helper'
 module Gisele::Analysis
   describe Session, 'bdd' do
 
-    let(:s){ session(true) }
-    let(:moving_bdd){ s.variable(:moving).bdd }
     subject{ s.bdd(expr) }
 
     context 'on a BDD' do
-      let(:expr){ moving_bdd }
+      let(:expr){ s.bdd("moving") }
 
-      it{ should eq(moving_bdd) }
+      it{ should eq(s.bdd("moving")) }
     end
 
     context 'on true' do
@@ -27,25 +25,25 @@ module Gisele::Analysis
     context 'on a Variable (variable name)' do
       let(:expr){ s.variable(:moving) }
 
-      it{ should eq(moving_bdd) }
+      it{ should eq(s.bdd("moving")) }
     end
 
     context 'on a Symbol (variable name)' do
       let(:expr){ :moving }
 
-      it{ should eq(moving_bdd) }
+      it{ should eq(s.bdd("moving")) }
     end
 
     context 'on a sexpr' do
       let(:expr){ Sexpr.sexpr [:bool_expr, [:var_ref, 'moving']] }
 
-      it{ should eq(moving_bdd) }
+      it{ should eq(s.bdd("moving")) }
     end
 
     context 'on a valid expression' do
       let(:expr){ "not(moving)" }
 
-      it{ should eq(!moving_bdd) }
+      it{ should eq(!s.bdd("moving")) }
     end
 
     context 'on an invalid expression' do

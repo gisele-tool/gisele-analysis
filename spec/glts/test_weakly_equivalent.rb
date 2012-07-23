@@ -2,7 +2,6 @@ require 'spec_helper'
 module Gisele::Analysis
   describe Glts, "weakly_equivalent?" do
 
-    let(:s){ session(true) }
     subject{ operand.weakly_equivalent?(reference) }
 
     let(:reference) {

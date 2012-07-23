@@ -2,9 +2,6 @@ require 'spec_helper'
 module Gisele::Analysis
   describe Glts::Eclosure do
 
-    let(:s){ session(true) }
-    let(:one){ s.bdd_interface.one }
-
     subject{ glts.eclosure! }
 
     context 'on a tree glts' do

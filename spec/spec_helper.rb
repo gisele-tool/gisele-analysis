@@ -15,6 +15,10 @@ module SpecHelpers
     end
   end
 
+  def s
+    @session_with_vars ||= session(true)
+  end
+
   def bddi(*args)
     session(*args).bdd_interface
   end
