@@ -86,5 +86,31 @@ module Gisele::Analysis
       end
     end
 
+    context 'on complete & disjoint guards on initial state' do
+      let(:glts){
+        Glts.new(s) do |f|
+          x = f.add_state(:initial => true)
+          y = f.add_state
+          z = f.add_state
+          f.connect(x, y, :guard => "moving", :event => "a")
+          f.connect(x, y, :guard => "not(moving)")
+          f.connect(y, z, :guard => "closed", :event => "b")
+        end
+      }
+      it 'computes closures correctly' do
+        s0, s1, s2 = subject.states
+        s0[:eclosure].should eq({
+          s0 => one,
+          s1 => bdd('not(moving)')
+        })
+        s1[:eclosure].should eq({
+          s1 => one
+        })
+        s2[:eclosure].should eq({
+          s2 => one
+        })
+      end
+    end
+
   end
 end

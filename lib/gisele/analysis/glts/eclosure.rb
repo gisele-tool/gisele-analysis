@@ -6,7 +6,6 @@ module Gisele::Analysis
       EMPTY = {}.freeze
 
       def initialize(session)
-        super(:eclosure)
         @session = session
       end
 
@@ -15,15 +14,12 @@ module Gisele::Analysis
       end
 
       def propagate(deco, edge)
-        if edge.symbol.nil?
-          EMPTY
-        else
-          propagated = {}
-          deco.each_pair do |k,v|
-            propagated[k] = (v & edge[:bdd])
-          end
-          propagated
+        return EMPTY if edge[:event]
+        propagated = {}
+        deco.each_pair do |k,v|
+          propagated[k] = (v & edge[:bdd])
         end
+        propagated
       end
 
       def init_deco(s)
@@ -42,7 +38,7 @@ module Gisele::Analysis
 
     # Ensure that epsilon-closure info is present as a state decoration.
     def eclosure!
-      Eclosure.new(session).call(self)
+      Eclosure.new(session).call(self, :eclosure)
     end
 
   end # class Glts
