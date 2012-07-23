@@ -8,8 +8,8 @@ module SpecHelpers
     @session ||= begin
       s = Gisele::Analysis::Session.new
       if with_vars
-        s.fluent :moving, [:start], [:stop]
-        s.fluent :closed, [:close], [:open]
+        s.fluent :moving, [:start], [:stop], false
+        s.fluent :closed, [:close], [:open], true
       end
       s
     end

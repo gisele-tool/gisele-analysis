@@ -4,10 +4,15 @@ module Gisele::Analysis
     GUARD_SYMBOL = "[guard]"
 
     attr_reader :session
+    attr_writer :c0
 
     def initialize(session)
       @session = session
       super()
+    end
+
+    def c0
+      @c0 || session.c0
     end
 
     def add_state(data = {})

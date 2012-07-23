@@ -39,6 +39,15 @@ module Gisele::Analysis
     end
     private :add_var
 
+    def c0
+      cube = []
+      variables.each do |var|
+        next if var.initially.nil?
+        cube << (var.initially ? var.bdd : !var.bdd)
+      end
+      bdd_interface.cube(cube, :bdd)
+    end
+
     ### BDD MANAGEMENT ###################################################################
     attr_reader :cudd_manager
 
