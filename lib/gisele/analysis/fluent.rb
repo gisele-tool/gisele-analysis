@@ -1,6 +1,5 @@
 module Gisele::Analysis
   class Fluent < Variable
-    include Gisele::Analysis::Session::Utils
 
     attr_reader :init_events
     attr_reader :term_events

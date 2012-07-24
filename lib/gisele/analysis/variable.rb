@@ -1,5 +1,6 @@
 module Gisele::Analysis
   class Variable
+    include Session::Utils
 
     attr_reader :session
     attr_reader :name

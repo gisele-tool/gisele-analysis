@@ -1,6 +1,5 @@
 module Gisele::Analysis
   class Trackvar < Variable
-    include Gisele::Analysis::Session::Utils
 
     attr_reader :update_events
 
