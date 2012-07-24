@@ -2,23 +2,21 @@ module Gisele::Analysis
   class Glts
 
     def explicit_guards!
-      invariants!
-      each_edge do |e|
-        old_bdd, bdd = e[:bdd], e[:bdd] & e.source[:invariant]
-        old_bdd.deref
-        bdd.ref
-        e[:bdd] = bdd
-      end
-      self
+      apply_on_guards!{|g, inv| g & inv }
     end
 
     def simplify_guards!
+      apply_on_guards!{|g, inv| g.restrict(inv) }
+    end
+
+  private
+
+    def apply_on_guards!
       invariants!
       each_edge do |e|
-        old_bdd, bdd = e[:bdd], e[:bdd].restrict(e.source[:invariant])
-        old_bdd.deref
-        bdd.ref
-        e[:bdd] = bdd
+        new_guard = yield(e[:bdd], e.source[:invariant]).ref
+        e[:bdd].deref
+        e[:bdd] = new_guard
       end
       self
     end

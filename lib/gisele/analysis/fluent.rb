@@ -25,10 +25,9 @@ module Gisele::Analysis
   private
 
     def _apply_on_invariant(invariant, positive)
-      existential = invariant.exist_abstract(bdd).ref
-      anded       = (existential & (positive ? bdd : !bdd))
-      existential.deref
-      anded
+      with_bdd invariant.exist_abstract(bdd) do |e|
+        e & (positive ? bdd : !bdd)
+      end
     end
 
   end # class Fluent

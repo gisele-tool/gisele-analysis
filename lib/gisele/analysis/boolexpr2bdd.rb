@@ -43,9 +43,9 @@ module Gisele::Analysis
 
     def with_bdd_apply(terms)
       bdds = terms.map{|term| apply(term).ref}
-      res  = yield(*bdds)
+      yield(*bdds)
+    ensure
       bdds.each{|bdd| bdd.deref}
-      res
     end
 
   end
