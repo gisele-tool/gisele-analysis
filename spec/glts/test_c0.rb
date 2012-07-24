@@ -2,6 +2,10 @@ require 'spec_helper'
 module Gisele::Analysis
   describe Glts, 'c0' do
 
+    before do
+      s.fluent :specific, [], []
+    end
+
     let(:glts){
       Glts.new(s) do |g|
         g.add_state :initial => true
@@ -18,15 +22,12 @@ module Gisele::Analysis
     end
 
     context 'when c0 has been set on the glts' do
-
-      let(:c0){ s.bdd("moving") }
-
       before do
-        glts.c0 = c0
+        glts.c0 = s.bdd("specific")
       end
 
-      it 'uses the provided c0' do
-        subject.should eq(c0)
+      it 'computes the conjunction of both c0s' do
+        subject.should eq(s.c0 & s.bdd("specific"))
       end
     end
 

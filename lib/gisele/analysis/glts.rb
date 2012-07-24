@@ -1,5 +1,6 @@
 module Gisele::Analysis
   class Glts < Stamina::Automaton
+    include Session::Utils
 
     GUARD_SYMBOL = "[guard]"
 
@@ -12,7 +13,9 @@ module Gisele::Analysis
     end
 
     def c0
-      @c0 || session.c0
+      with_bdd session.c0 do |s_c0|
+        (@c0 || one) & s_c0
+      end
     end
 
     def add_state(data = {})

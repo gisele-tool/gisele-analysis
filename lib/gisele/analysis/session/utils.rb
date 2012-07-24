@@ -20,6 +20,13 @@ module Gisele::Analysis
         bdd_interface.zero
       end
 
+      def with_bdd(*bdds)
+        bdds.each{|bdd| bdd.ref}
+        yield(*bdds)
+      ensure
+        bdds.each{|bdd| bdd.deref}
+      end
+
     end
   end
 end
