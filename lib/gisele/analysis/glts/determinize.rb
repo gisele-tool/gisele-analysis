@@ -64,7 +64,7 @@ module Gisele::Analysis
           map
         end
 
-    end # class Eremoval
+    end # class Determinize
 
     # Returns a deterministic version of this glts.
     def determinize
