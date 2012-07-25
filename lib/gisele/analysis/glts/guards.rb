@@ -16,7 +16,7 @@ module Gisele::Analysis
       each_edge do |e|
         new_guard = yield(e[:bdd], e.source[:invariant]).ref
         e[:bdd].deref
-        e[:bdd] = new_guard
+        e[:bdd], e[:guard] = new_guard, new_guard.to_dnf
       end
       self
     end
