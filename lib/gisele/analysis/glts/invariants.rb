@@ -38,7 +38,10 @@ module Gisele::Analysis
     end # class Invariants
 
     def invariants!
-      Invariants.new(self).call(self, :invariant)
+      unless @invariants_generated
+        Invariants.new(self).call(self, :invariant)
+        @invariants_generated = true
+      end
       self
     end
 

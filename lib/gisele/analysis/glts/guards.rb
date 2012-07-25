@@ -2,11 +2,19 @@ module Gisele::Analysis
   class Glts
 
     def explicit_guards!
-      apply_on_guards!{|g, inv| g & inv }
+      unless @guards_mode == :explicit
+        apply_on_guards!{|g, inv| g & inv }
+        @guards_mode = :explicit
+      end
+      self
     end
 
     def simplify_guards!
-      apply_on_guards!{|g, inv| g.restrict(inv) }
+      unless @guards_mode == :simplified
+        apply_on_guards!{|g, inv| g.restrict(inv) }
+        @guards_mode = :simplified
+      end
+      self
     end
 
   private
