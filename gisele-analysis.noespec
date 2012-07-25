@@ -25,5 +25,4 @@ variables:
     - {name: rspec,           version: "~> 2.11",   groups: [development]}
     - {name: gisele-language, version: "~> 0.5.0",  groups: [runtime]}
     - {name: stamina-core,    version: "~> 0.5.4",  groups: [runtime]}
-    - {name: cudd-rb,         version: "~> 0.1.0",  groups: [runtime]}
-
+    - {name: cudd-rb,         version: "~> 0.0.1",  groups: [runtime]}
