@@ -9,7 +9,8 @@ module Gisele::Analysis
         (s.state_count == t.state_count) &&
         (s.edge_count  == t.edge_count)  &&
         (s.alphabet    == t.alphabet)    &&
-        (s.data        == t.data)
+        (s.data        == t.data)        &&
+        (s.c0          == t.c0)
       end
 
       def equivalent_states?(s, t)
