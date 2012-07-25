@@ -32,9 +32,11 @@ module Gisele::Analysis
       super(from, to, data)
     end
 
-    def to_dot
-      super false, &DOT_REWRITER
+    def dup(glts = Glts.new(session))
+      super(glts)
     end
+
+    ### OUTPUT ###########################################################################
 
     DOT_REWRITER = lambda{|elm,kind|
       case kind
@@ -57,8 +59,27 @@ module Gisele::Analysis
       end
     }
 
-    def dup(glts = Glts.new(session))
-      super(glts)
+    def to_dot
+      super false, &DOT_REWRITER
+    end
+
+    def to_ruby_literal
+      buf = ""
+      buf << "Glts.new(session) do |g|\n"
+      buf << "  g.add_state :initial => true\n"
+      buf << "  g.add_n_states #{state_count - 1}\n"
+      each_edge do |e|
+        s, t = e.source.index, e.target.index
+        event, guard = e[:event], e[:guard]
+        event = event.inspect if event
+        guard = (guard.nil? or guard=="true") ? nil : guard.inspect
+        buf << "  g.connect #{e.source.index}, #{e.target.index}"
+        buf << ", :event => #{event}" if event
+        buf << ", :guard => #{guard}" if guard
+        buf << "\n"
+      end
+      buf << "end\n"
+      buf
     end
 
   private
