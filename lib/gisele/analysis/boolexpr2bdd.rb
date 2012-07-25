@@ -45,7 +45,7 @@ module Gisele::Analysis
       bdds = terms.map{|term| apply(term).ref}
       yield(*bdds)
     ensure
-      bdds.each{|bdd| bdd.deref}
+      bdds.each{|bdd| bdd.deref} if bdds
     end
 
   end
