@@ -57,6 +57,10 @@ module Gisele::Analysis
       end
     }
 
+    def dup(glts = Glts.new(session))
+      super(glts)
+    end
+
   private
 
     def self.edge_label(e)

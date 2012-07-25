@@ -2,11 +2,24 @@ require 'spec_helper'
 module Gisele::Analysis
   describe Glts::Determinize do
 
+    before(:all){
+      @session = Session.new
+      @session.fluent :moving, [:start], [:stop]
+      @session.fluent :closed, [:close], [:open]
+      @session
+    }
+    let(:session){
+      @session
+    }
+    after(:all){
+      @session.close if session
+    }
+
     subject{ glts.determinize }
 
     context 'on a tree glts' do
       let(:glts){
-        Glts.new(s) do |g|
+        Glts.new(session) do |g|
           g.add_state(:initial => true)
           g.add_n_states(4)
           g.connect(0, 1, :guard => "not(moving)")
@@ -16,7 +29,7 @@ module Gisele::Analysis
         end
       }
       let(:expected){
-        Glts.new(s) do |g|
+        Glts.new(session) do |g|
           g.add_state(:initial => true)
           g.add_n_states(2)
           g.connect(0, 1, :guard => "not(moving)", :event => :start)
@@ -24,12 +37,14 @@ module Gisele::Analysis
         end
       }
 
-      it{ should be_weakly_equivalent(expected) }
+      it{
+        should be_weakly_equivalent(expected)
+      }
     end
 
     context 'on a acyclic glts' do
       let(:glts){
-        Glts.new(s) do |g|
+        Glts.new(session) do |g|
           g.add_state(:initial => true)
           g.add_n_states(4)
           g.connect(0, 1, :guard => "moving")
@@ -40,7 +55,7 @@ module Gisele::Analysis
         end
       }
       let(:expected){
-        Glts.new(s) do |g|
+        Glts.new(session) do |g|
           g.add_state(:initial => true)
           g.add_n_states(2)
           g.connect(0, 1, :guard => "moving", :event => :start)
@@ -48,12 +63,14 @@ module Gisele::Analysis
         end
       }
 
-      it{ should be_weakly_equivalent(expected) }
+      it{
+        should be_weakly_equivalent(expected)
+      }
     end
 
     context 'on a dumb cyclic glts' do
       let(:glts){
-        Glts.new(s) do |g|
+        Glts.new(session) do |g|
           g.add_state(:initial => true)
           g.add_state
           g.connect(0, 1, :guard => "moving")
@@ -61,17 +78,19 @@ module Gisele::Analysis
         end
       }
       let(:expected){
-        Glts.new(s) do |f|
+        Glts.new(session) do |f|
           x = f.add_state(:initial => true)
         end
       }
 
-      it{ should be_weakly_equivalent(expected) }
+      it{
+        should be_weakly_equivalent(expected)
+      }
     end
 
     context 'on an empty glts' do
       let(:glts){
-        Glts.new(s) do |f|
+        Glts.new(session) do |f|
           x = f.add_state(:initial => true)
         end
       }
@@ -79,16 +98,18 @@ module Gisele::Analysis
         glts
       }
 
-      it{ should be_weakly_equivalent(expected) }
+      it{
+        should be_weakly_equivalent(expected)
+      }
     end
 
     context 'with g1, g2, g3 as guards' do
-      before{ [:g1, :g2, :g3].each{|v| s.fluent v, [], [] } }
+      before(:all){ [:g1, :g2, :g3].each{|v| session.fluent v, [], [] } }
 
       context 'with a superficious guard to be removed' do
         let(:glts){
           # (x) -> [g1]/a -> (y) -> [g2]/nil -> (z)
-          Glts.new(s) do |f|
+          Glts.new(session) do |f|
             x = f.add_state(:initial => true)
             y = f.add_state
             z = f.add_state
@@ -98,7 +119,7 @@ module Gisele::Analysis
         }
         let(:expected){
           # (x) -> [g1]/a -> (y)
-          Glts.new(s) do |f|
+          Glts.new(session) do |f|
             x = f.add_state(:initial => true)
             y = f.add_state
             f.connect(x, y, :guard => "g1", :event => "a")
@@ -111,7 +132,7 @@ module Gisele::Analysis
       context 'with unreachable state through false guard' do
         let(:glts){
           # (x) -> [g1]/nil -> (y) -> [!g1]/a -> (z)
-          Glts.new(s) do |f|
+          Glts.new(session) do |f|
             x = f.add_state(:initial => true)
             y = f.add_state
             z = f.add_state
@@ -121,7 +142,7 @@ module Gisele::Analysis
         }
         let(:expected){
           # (x) -> [false]/a -> (y)
-          Glts.new(s) do |f|
+          Glts.new(session) do |f|
             x = f.add_state(:initial => true)
             y = f.add_state
             f.connect(x, y, :guard => "false", :event => "a")
@@ -135,7 +156,7 @@ module Gisele::Analysis
         let(:glts){
           # (x) -> [g1]/nil -> (y)
           # (x) -> [g2]/a -> (y)
-          Glts.new(s) do |f|
+          Glts.new(session) do |f|
             x = f.add_state(:initial => true)
             y = f.add_state
             f.connect(x, y, :guard => "g1")
@@ -144,7 +165,7 @@ module Gisele::Analysis
         }
         let(:expected){
           # (x) -> [g2]/a -> (y)
-          Glts.new(s) do |f|
+          Glts.new(session) do |f|
             x = f.add_state(:initial => true)
             y = f.add_state
             f.connect(x, y, :guard => "g2", :event => "a")
@@ -159,7 +180,7 @@ module Gisele::Analysis
           # (x) -> [g1]/a -> (y)
           # (x) -> [!g1]/nil -> (y)
           # (y) -> [g2]/b -> (z)
-          Glts.new(s) do |f|
+          Glts.new(session) do |f|
             x = f.add_state(:initial => true)
             y = f.add_state
             z = f.add_state
@@ -172,7 +193,7 @@ module Gisele::Analysis
           # (x) -> [g1]/a -> (y)
           # (x) -> [!g1 & g2]/b -> (z)
           # (y) -> [g2]/b -> (z)
-          Glts.new(s) do |f|
+          Glts.new(session) do |f|
             x = f.add_state(:initial => true)
             y = f.add_state
             z = f.add_state
@@ -188,7 +209,7 @@ module Gisele::Analysis
       context 'on a guarded loop' do
         let(:glts){
           # (x) -> [g1]/a -> (y) -> [g2]/nil -> (x)
-          Glts.new(s) do |f|
+          Glts.new(session) do |f|
             x = f.add_state(:initial => true)
             y = f.add_state
             f.connect(x, y, :guard => "g1", :event => "a")
@@ -197,7 +218,7 @@ module Gisele::Analysis
         }
         let(:expected){
           # (x) -> [g1]/a -> (y) -> [g1 & g2]/a -> (y)
-          Glts.new(s) do |f|
+          Glts.new(session) do |f|
             x = f.add_state(:initial => true)
             y = f.add_state
             f.connect(x, y, :guard => "g1", :event => "a")

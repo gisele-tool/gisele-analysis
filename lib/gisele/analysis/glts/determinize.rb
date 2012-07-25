@@ -68,7 +68,7 @@ module Gisele::Analysis
 
     # Returns a deterministic version of this glts.
     def determinize
-      Determinize.new(self).target
+      Determinize.new(self.dup.explicit_guards!).target.simplify_guards!
     end
 
   end # class Glts
