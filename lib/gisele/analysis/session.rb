@@ -48,6 +48,12 @@ module Gisele::Analysis
       bdd_interface.cube(cube, :bdd)
     end
 
+    ### GLTS MANAGEMENT ##################################################################
+
+    def glts(&bl)
+      Glts.new(self, &bl)
+    end
+
     ### BDD MANAGEMENT ###################################################################
     attr_reader :cudd_manager
 
