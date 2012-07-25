@@ -82,6 +82,17 @@ module Gisele::Analysis
       buf
     end
 
+    def to_relation
+      states = Relation self.states.map{|s|
+        {:index => s.index, :initial => s.initial?}
+      }
+      edges = Relation self.edges.map{|e|
+        {:index => e.index, :from => e.source.index, :to => e.target.index,
+         :event => e[:event], :guard => e[:guard]}
+      }
+      Relation(:states => states, :edges => edges)
+    end
+
   private
 
     def self.edge_label(e)
