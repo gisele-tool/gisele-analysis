@@ -9,7 +9,7 @@ module Gisele::Analysis
 
     def initialize(session)
       @session = session
-      super()
+      super(false)
     end
 
     def c0

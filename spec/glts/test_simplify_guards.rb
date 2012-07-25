@@ -6,10 +6,10 @@ module Gisele::Analysis
       Glts.new(s) do |g|
         g.add_state :initial => true
         g.add_n_states(4)
-        connect(0, 1, :event => :start, :guard => "not(moving) and closed")
-        connect(1, 2, :guard => "moving and closed")
-        connect(1, 3, :guard => "false")
-        connect(2, 4, :event => :stop, :guard => "moving and closed")
+        g.connect(0, 1, :event => :start, :guard => "not(moving) and closed")
+        g.connect(1, 2, :guard => "moving and closed")
+        g.connect(1, 3, :guard => "false")
+        g.connect(2, 4, :event => :stop, :guard => "moving and closed")
       end
     }
 
