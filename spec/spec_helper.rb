@@ -4,6 +4,10 @@ require 'gisele-analysis'
 module SpecHelpers
   include Gisele::Analysis::Session::Utils
 
+  def meeting_scheduling_sexpr
+    Gisele::Language.sexpr Path.dir/"fixtures/MeetingScheduling.gis"
+  end
+
   def session(with_vars = false)
     @session ||= begin
       s = Gisele::Analysis::Session.new
