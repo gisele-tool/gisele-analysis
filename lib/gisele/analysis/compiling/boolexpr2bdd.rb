@@ -1,15 +1,7 @@
 module Gisele
   module Analysis
     module Compiling
-      class Boolexpr2BDD < Sexpr::Processor
-        include Session::Utils
-
-        attr_reader :session
-
-        def initialize(session, options = {})
-          super(options)
-          @session = session
-        end
+      class Boolexpr2BDD < Processor
 
         def on_bool_expr(sexpr)
           apply(sexpr.last)

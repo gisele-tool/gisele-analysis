@@ -66,7 +66,7 @@ module Gisele::Analysis
       when Cudd::BDD  then expr
       when Variable   then expr.bdd
       when Symbol     then variable(expr, true).bdd
-      when Sexpr      then Compiling::Boolexpr2BDD.new(self).call(expr)
+      when Sexpr      then Compiling::Boolexpr2BDD.call(self, expr)
       when String     then bdd(Gisele.sexpr Gisele.parse(expr, :root => :bool_expr))
       when TrueClass  then bdd_interface.one
       when FalseClass then bdd_interface.zero

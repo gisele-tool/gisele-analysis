@@ -9,7 +9,7 @@ module Gisele
         let(:sexpr) { Gisele.sexpr(parsed)                    }
 
         subject{
-          Boolexpr2BDD.new(s).call(sexpr)
+          Boolexpr2BDD.call(s, sexpr)
         }
 
         context "on 'true'" do
