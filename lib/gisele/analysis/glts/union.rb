@@ -8,7 +8,7 @@ module Gisele::Analysis
           from.dup(to) do |s, t|
             if s.initial?
               t.initial!(false)
-              to.connect(init_state, t, :guard => from.c0)
+              to.connect(init_state, t, :bdd => from.c0, :guard => from.c0.to_dnf)
             end
           end
         end
