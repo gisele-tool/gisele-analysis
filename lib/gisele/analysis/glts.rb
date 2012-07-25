@@ -5,7 +5,6 @@ module Gisele::Analysis
     GUARD_SYMBOL = "[guard]"
 
     attr_reader :session
-    attr_writer :c0
 
     def initialize(session)
       @session = session
@@ -16,6 +15,10 @@ module Gisele::Analysis
       with_bdd session.c0 do |s_c0|
         (@c0 || one) & s_c0
       end
+    end
+
+    def c0=(c0)
+      @c0 = session.bdd(c0)
     end
 
     def add_state(data = {})

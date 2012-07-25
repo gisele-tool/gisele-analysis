@@ -23,7 +23,7 @@ module Gisele::Analysis
 
     context 'when c0 has been set on the glts' do
       before do
-        glts.c0 = s.bdd("specific")
+        glts.c0 = "specific"
       end
 
       it 'computes the conjunction of both c0s' do
