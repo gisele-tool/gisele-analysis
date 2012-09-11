@@ -16,7 +16,7 @@ module Gisele::Analysis
 
     it 'sets the symbols correctly' do
       subject.ith_edge(0)[:symbol].should eq("start")
-      subject.ith_edge(1)[:symbol].should eq("[guard]")
+      subject.ith_edge(1)[:symbol].should be_nil
     end
 
     it 'sets the events correctly' do

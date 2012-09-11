@@ -2,8 +2,6 @@ module Gisele::Analysis
   class Glts < Stamina::Automaton
     include Session::Utils
 
-    GUARD_SYMBOL = "[guard]"
-
     attr_reader :session
 
     def initialize(session)
@@ -27,7 +25,7 @@ module Gisele::Analysis
     end
 
     def connect(from, to, data)
-      data[:symbol] ||= data[:event] || GUARD_SYMBOL
+      data[:symbol] ||= data[:event] || nil
       data[:bdd]    ||= session.bdd(data[:guard] || true).ref
       super(from, to, data)
     end
