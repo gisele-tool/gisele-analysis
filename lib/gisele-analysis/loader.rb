@@ -1,4 +1,5 @@
 require "gisele-language"
 require "stamina-core"
 require "cudd-rb"
+require "yargi"
 require "alf"

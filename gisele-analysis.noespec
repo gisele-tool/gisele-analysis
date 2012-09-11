@@ -26,4 +26,5 @@ variables:
     - {name: gisele-language, version: "~> 0.5.0",  groups: [runtime]}
     - {name: stamina-core,    version: "~> 0.5.4",  groups: [runtime]}
     - {name: cudd-rb,         version: "~> 0.0.1",  groups: [runtime]}
+    - {name: yargi,           version: "~> 0.2.0",  groups: [runtime]}
     - {name: alf,             version: "~> 0.13.0", groups: [runtime]}

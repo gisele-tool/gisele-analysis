@@ -10,4 +10,5 @@ group :runtime do
   gem "stamina-core", :path => "../stamina" #"~> 0.5.4"
   gem "cudd-rb", :path => "../cudd-rb"
   gem "alf", :path => "../alf"
+  gem "yargi", "~> 0.2.0"
 end
