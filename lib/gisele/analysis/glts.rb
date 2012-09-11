@@ -36,29 +36,27 @@ module Gisele::Analysis
 
     ### OUTPUT ###########################################################################
 
-    DOT_REWRITER = lambda{|elm,kind|
-      case kind
-        when :automaton
-          {:rankdir => "LR",
-           :margin  => "0",
-           :pack    => "true",
-           :ranksep => "0"}
-        when :state
-          {:shape     => "circle",
-           :style     => "filled",
-           :color     => "black",
-           :fillcolor => (elm.initial? ? "green" : "white"),
-           :fixedsize => "true",
-           :height    => "0.6",
-           :width     => "0.6"}
-        when :edge
-          {:label     => Glts.edge_label(elm),
-           :arrowsize => "0.7"}
-      end
-    }
-
     def to_dot
-      super false, &DOT_REWRITER
+      super(false) do |elm, kind|
+        case kind
+          when :automaton
+            {:rankdir => "LR",
+             :margin  => "0",
+             :pack    => "true",
+             :ranksep => "0"}
+          when :state
+            {:shape     => "circle",
+             :style     => "filled",
+             :color     => "black",
+             :fillcolor => (elm.initial? ? "green" : "white"),
+             :fixedsize => "true",
+             :height    => "0.6",
+             :width     => "0.6"}
+          when :edge
+            {:label     => edge_label(elm),
+             :arrowsize => "0.7"}
+        end
+      end
     end
 
     def to_ruby_literal
@@ -93,7 +91,7 @@ module Gisele::Analysis
 
   private
 
-    def self.edge_label(e)
+    def edge_label(e)
       event   = e[:event]
       guard   = e[:guard] && "[#{e[:guard]}]"
       [guard, event].compact.map(&:to_s).join(' / ')
