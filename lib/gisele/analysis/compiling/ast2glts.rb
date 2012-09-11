@@ -3,8 +3,8 @@ module Gisele
     module Compiling
       class Ast2Glts < Processor
 
-        # if/elsif/else -> guarded commands
-        use Language::IfToCase
+        # We do not support the elsif syntactic sugar here; rewrite it as 'else if'.
+        use Language::ElsifFlattener
 
         def on_unit_def(sexpr)
           sexpr.
@@ -37,6 +37,29 @@ module Gisele
           mine
         end
         alias :on_par_st :on_seq_st
+
+        def on_if_st(sexpr)
+          cond, then_clause, else_clause, = sexpr.sexpr_body
+
+          entry, exit = entry_and_exit(sexpr)
+
+          diamond = add_state(sexpr)
+          connect(entry, diamond)
+
+          c_entry, c_exit = apply(then_clause)
+          connect(diamond, c_entry, cond)
+          connect(c_exit, exit)
+
+          if else_clause
+            c_entry, c_exit = apply(else_clause.last)
+            connect(diamond, c_entry, cond.negate)
+            connect(c_exit, exit)
+          else
+            connect(diamond, exit, cond.negate)
+          end
+
+          [entry, exit]
+        end
 
         def on_case_st(sexpr)
           cond, *clauses = sexpr.sexpr_body
