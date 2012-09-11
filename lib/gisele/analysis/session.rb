@@ -48,6 +48,12 @@ module Gisele::Analysis
       bdd_interface.cube(cube, :bdd)
     end
 
+    ### gHMSC MANAGEMENT #################################################################
+
+    def ghmsc(&bl)
+      Ghmsc.new(self, &bl)
+    end
+
     ### GLTS MANAGEMENT ##################################################################
 
     def glts(&bl)
