@@ -18,9 +18,10 @@ module Gisele
 
           entry = add_state(sexpr, :initial => true)
           exit  = add_state(sexpr)
+
           c_entry, c_exit = apply(sexpr.last)
-          connect(entry, c_entry)
-          connect(c_exit, exit)
+          connect(entry, c_entry, transition(sexpr, "start"))
+          connect(c_exit, exit, transition(sexpr, "end"))
 
           @glts
         end
@@ -121,6 +122,7 @@ module Gisele
         def transition(sexpr, kind = nil)
           raise UnexpectedNodeError, "Node expected, got #{sexpr}" unless Sexpr===sexpr
           case sexpr.first
+          when :task_def     then {:event => "#{sexpr.label}:#{kind}"}
           when :task_call_st then {:event => "#{sexpr.label}:#{kind}"}
           when :bool_expr    then {:guard => sexpr.label, 
                                    :bdd => Boolexpr2BDD.call(session, sexpr)}
