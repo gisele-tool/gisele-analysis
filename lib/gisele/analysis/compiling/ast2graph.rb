@@ -150,7 +150,9 @@ module Gisele
         def dot_attributes(sexpr)
           if Sexpr===sexpr
             attrs = DOT_ATTRIBUTES["graphviz"][sexpr.first.to_s] || {}
-            attrs = attrs.merge(:label => sexpr.label) if sexpr.respond_to?(:label)
+            if not(attrs.has_key?('label')) and sexpr.respond_to?(:label)
+              attrs = attrs.merge(:label => sexpr.label)
+            end
             attrs
           else
             {} # sometimes, sexpr is simply nil

@@ -5,6 +5,7 @@ graphviz:
     fillcolor: black
     fixed: true
     width: 0.1
+    label: ""
   task_call_st:
     shape: box
   while_st:
