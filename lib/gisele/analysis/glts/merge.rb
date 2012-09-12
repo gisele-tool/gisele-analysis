@@ -4,7 +4,7 @@ module Gisele::Analysis
     class Merge
 
       def initialize
-        @threshold = 1
+        @threshold = 2
       end
       attr_reader :threshold
 
