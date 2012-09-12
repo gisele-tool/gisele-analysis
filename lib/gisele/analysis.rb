@@ -12,8 +12,6 @@ module Gisele
 end
 require "gisele/analysis/session"
 require "gisele/analysis/variable"
-require "gisele/analysis/fluent"
-require "gisele/analysis/trackvar"
 require "gisele/analysis/glts"
 require "gisele/analysis/ghmsc"
 require "gisele/analysis/compiling"

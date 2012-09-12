@@ -23,3 +23,5 @@ module Gisele::Analysis
 
   end # class Variable
 end # module Gisele
+require_relative "variable/fluent"
+require_relative "variable/trackvar"
