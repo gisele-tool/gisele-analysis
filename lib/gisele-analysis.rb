@@ -1,4 +1,4 @@
 require "gisele-analysis/version"
 require "gisele-analysis/loader"
-require "gisele/errors"
-require "gisele/analysis"
+require_relative "gisele/errors"
+require_relative "gisele/analysis"
