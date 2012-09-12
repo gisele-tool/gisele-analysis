@@ -6,7 +6,7 @@ group :development do
 end
 
 group :runtime do
-  gem "gisele-language", "~> 0.5.0"
+  gem "gisele-language", :path => "../gisele-language"
   gem "stamina-core", :path => "../stamina" #"~> 0.5.4"
   gem "cudd-rb", :path => "../cudd-rb"
   gem "alf", :path => "../alf"
