@@ -10,6 +10,7 @@ module Gisele
 
   end
 end
+require "gisele/analysis/mixin"
 require "gisele/analysis/session"
 require "gisele/analysis/variable"
 require "gisele/analysis/glts"

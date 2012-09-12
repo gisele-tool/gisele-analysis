@@ -1,9 +1,11 @@
 require 'spec_helper'
 module Gisele::Analysis
-  describe Session, 'trackvar' do
+  describe Mixin::VarsHolder, 'trackvar' do
+
+    let(:holder){ Mixin.new(session, Mixin::VarsHolder, Mixin::BddUtils) }
 
     subject{
-      session.trackvar :big, [:decide], true
+      holder.trackvar :big, [:decide], true
     }
 
     it 'returns a Trackvar instance' do
@@ -27,7 +29,7 @@ module Gisele::Analysis
     end
 
     it 'supports no initially' do
-      t = session.trackvar :big, []
+      t = holder.trackvar :big, []
       t.initially.should be_nil
     end
 

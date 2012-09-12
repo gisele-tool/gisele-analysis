@@ -1,7 +1,7 @@
 module Gisele::Analysis
   class Glts
     class Invariants < Stamina::Utils::Decorate
-      include Session::Utils
+      include Mixin::BddUtils
 
       def initialize(glts)
         @glts = glts

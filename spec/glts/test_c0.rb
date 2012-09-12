@@ -17,7 +17,7 @@ module Gisele::Analysis
     context 'when no c0 has been set on the glts' do
 
       it 'delegates to the session' do
-        subject.should eq(s.c0)
+        subject.should eq(s.c0_from_variables)
       end
     end
 
@@ -27,7 +27,7 @@ module Gisele::Analysis
       end
 
       it 'computes the conjunction of both c0s' do
-        subject.should eq(s.c0 & s.bdd("specific"))
+        subject.should eq(s.c0_from_variables & s.bdd("specific"))
       end
     end
 

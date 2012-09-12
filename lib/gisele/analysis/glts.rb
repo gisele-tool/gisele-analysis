@@ -1,6 +1,6 @@
 module Gisele::Analysis
   class Glts < Stamina::Automaton
-    include Session::Utils
+    include Mixin::BddUtils
 
     attr_reader :session
 
@@ -10,7 +10,7 @@ module Gisele::Analysis
     end
 
     def c0
-      with_bdd session.c0 do |s_c0|
+      with_bdd session.c0_from_variables do |s_c0|
         (@c0 || one) & s_c0
       end
     end

@@ -1,16 +1,15 @@
 module Gisele::Analysis
   class Glts
     class Determinize
-      include Session::Utils
-
-      attr_reader :source, :target
+      include Mixin::BddUtils
 
       def initialize(source)
         @session = source.session
         @source  = source.eclosure!
-        @target  = Glts.new(session)
+        @target  = Glts.new(@session)
         determinize!
       end
+      attr_reader :session, :source, :target
 
     private
 

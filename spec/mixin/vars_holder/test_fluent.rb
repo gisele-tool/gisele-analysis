@@ -1,9 +1,11 @@
 require 'spec_helper'
 module Gisele::Analysis
-  describe Session, 'fluent' do
+  describe Mixin::VarsHolder, 'fluent' do
+
+    let(:holder){ Mixin.new(session, Mixin::VarsHolder, Mixin::BddUtils) }
 
     subject{
-      session.fluent :moving, [:start], [:stop], false
+      holder.fluent :moving, [:start], [:stop], false
     }
 
     it 'returns a Fluent instance' do
@@ -31,7 +33,7 @@ module Gisele::Analysis
     end
 
     it 'supports no initially' do
-      f = session.fluent :moving, [], []
+      f = holder.fluent :moving, [], []
       f.initially.should be_nil
     end
 

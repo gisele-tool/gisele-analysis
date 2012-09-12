@@ -1,6 +1,6 @@
 module Gisele::Analysis
   class Variable
-    include Session::Utils
+    include Mixin::BddUtils
 
     attr_reader :session
     attr_reader :name

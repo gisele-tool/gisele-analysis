@@ -1,49 +1,55 @@
 require 'spec_helper'
 module Gisele::Analysis
-  describe Session, 'bdd' do
+  describe Mixin::BddUtils, 'bdd' do
 
-    subject{ s.bdd(expr) }
+    let(:holder){ Mixin.new(session, Mixin::VarsHolder, Mixin::BddUtils) }
+
+    before do
+      holder.fluent :moving, [], []
+    end
+
+    subject{ holder.bdd(expr) }
 
     context 'on a BDD' do
-      let(:expr){ s.bdd("moving") }
+      let(:expr){ holder.bdd("moving") }
 
-      it{ should eq(s.bdd("moving")) }
+      it{ should eq(holder.bdd("moving")) }
     end
 
     context 'on true' do
       let(:expr){ true }
 
-      it{ should eq(bddi.one) }
+      it{ should eq(holder.one) }
     end
 
     context 'on false' do
       let(:expr){ false }
 
-      it{ should eq(bddi.zero) }
+      it{ should eq(holder.zero) }
     end
 
     context 'on a Variable (variable name)' do
-      let(:expr){ s.variable(:moving) }
+      let(:expr){ holder.variable(:moving) }
 
-      it{ should eq(s.bdd("moving")) }
+      it{ should eq(holder.bdd("moving")) }
     end
 
     context 'on a Symbol (variable name)' do
       let(:expr){ :moving }
 
-      it{ should eq(s.bdd("moving")) }
+      it{ should eq(holder.bdd("moving")) }
     end
 
     context 'on a sexpr' do
       let(:expr){ Sexpr.sexpr [:bool_expr, [:var_ref, 'moving']] }
 
-      it{ should eq(s.bdd("moving")) }
+      it{ should eq(holder.bdd("moving")) }
     end
 
     context 'on a valid expression' do
       let(:expr){ "not(moving)" }
 
-      it{ should eq(!s.bdd("moving")) }
+      it{ should eq(!holder.bdd("moving")) }
     end
 
     context 'on an invalid expression' do

@@ -1,13 +1,14 @@
 module Gisele::Analysis
   class Glts
     class Eclosure < Stamina::Utils::Decorate
-      include Session::Utils
+      include Mixin::BddUtils
 
       EMPTY = {}.freeze
 
       def initialize(session)
         @session = session
       end
+      attr_reader :session
 
       def suppremum(d0, d1)
         d0.merge(d1){|k,l,r| (l | r)}
