@@ -42,7 +42,7 @@ module Gisele
           bdds.each{|bdd| bdd.deref} if bdds
         end
 
-      end
-    end
-  end
-end
+      end # module Gisele
+    end # module Compiling
+  end # module Analysis
+end # module Gisele
