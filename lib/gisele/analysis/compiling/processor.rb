@@ -2,7 +2,7 @@ module Gisele
   module Analysis
     module Compiling
       class Processor < Sexpr::Processor
-        include Mixin::BddUtils
+        include Mixin::BddManagement
 
         attr_reader :session
 

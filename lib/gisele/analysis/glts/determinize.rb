@@ -1,7 +1,7 @@
 module Gisele::Analysis
   class Glts
     class Determinize
-      include Mixin::BddUtils
+      include Mixin::BddManagement
 
       def initialize(source)
         @session = source.session

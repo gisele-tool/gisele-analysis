@@ -1,7 +1,7 @@
 module Gisele::Analysis
   class Session
     include Mixin::VarsHolder
-    include Mixin::BddUtils
+    include Mixin::BddManagement
 
     def initialize
       @cudd_manager = Cudd.manager

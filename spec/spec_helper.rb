@@ -2,7 +2,7 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'gisele-analysis'
 
 module SpecHelpers
-  include Gisele::Analysis::Mixin::BddUtils
+  include Gisele::Analysis::Mixin::BddManagement
 
   def meeting_scheduling_sexpr
     Gisele::Language.sexpr Path.dir/"fixtures/MeetingScheduling.gis"

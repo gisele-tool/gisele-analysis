@@ -1,7 +1,7 @@
 module Gisele::Analysis
   class Glts
     class Eclosure < Stamina::Utils::Decorate
-      include Mixin::BddUtils
+      include Mixin::BddManagement
 
       EMPTY = {}.freeze
 

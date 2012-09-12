@@ -1,6 +1,6 @@
 module Gisele::Analysis
   class Glts < Stamina::Automaton
-    include Mixin::BddUtils
+    include Mixin::BddManagement
 
     attr_reader :session
 

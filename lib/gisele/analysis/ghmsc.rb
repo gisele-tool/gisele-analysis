@@ -1,6 +1,6 @@
 module Gisele::Analysis
   class Ghmsc
-    include Mixin::BddUtils
+    include Mixin::BddManagement
 
     def initialize(session, &bl)
       @session = session

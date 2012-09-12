@@ -1,6 +1,6 @@
 module Gisele::Analysis
   module Mixin
-    module BddUtils
+    module BddManagement
 
       def cudd_manager
         session.cudd_manager
@@ -39,6 +39,6 @@ module Gisele::Analysis
         end
       end
 
-    end # module BddUtils
+    end # module BddManagement
   end # module Mixin
 end # module Gisele::Analysis

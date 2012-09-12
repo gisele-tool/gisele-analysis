@@ -1,8 +1,8 @@
 require 'spec_helper'
 module Gisele::Analysis
-  describe Mixin::BddUtils, 'bdd' do
+  describe Mixin::BddManagement, 'bdd' do
 
-    let(:holder){ Mixin.new(session, Mixin::VarsHolder, Mixin::BddUtils) }
+    let(:holder){ Mixin.new(session, Mixin::VarsHolder, Mixin::BddManagement) }
 
     before do
       holder.fluent :moving, [], []

@@ -2,7 +2,7 @@ require 'spec_helper'
 module Gisele::Analysis
   describe Mixin::VarsHolder, 'fluent' do
 
-    let(:holder){ Mixin.new(session, Mixin::VarsHolder, Mixin::BddUtils) }
+    let(:holder){ Mixin.new(session, Mixin::VarsHolder, Mixin::BddManagement) }
 
     subject{
       holder.fluent :moving, [:start], [:stop], false

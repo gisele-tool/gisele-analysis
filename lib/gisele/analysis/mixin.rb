@@ -1,5 +1,5 @@
 require_relative 'mixin/vars_holder'
-require_relative 'mixin/bdd_utils'
+require_relative 'mixin/bdd_management'
 module Gisele::Analysis
   module Mixin
 
