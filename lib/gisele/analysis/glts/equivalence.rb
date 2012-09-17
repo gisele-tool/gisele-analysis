@@ -21,12 +21,12 @@ module Gisele::Analysis
 
       def equivalent_edges?(e, f)
         (e[:event] == f[:event]) &&
-        (e[:bdd]   == f[:bdd])
+        (e[:guard] == f[:guard])
       end
 
       def find_edge_counterpart(reference_state, operand_edge)
-        expected = operand_edge.marks(:event, :bdd)
-        reference_state.out_edges.find{|e| e.marks(:event, :bdd) == expected }
+        expected = operand_edge.marks(:event, :guard)
+        reference_state.out_edges.find{|e| e.marks(:event, :guard) == expected }
       end
 
     end # class WeakEquivalence

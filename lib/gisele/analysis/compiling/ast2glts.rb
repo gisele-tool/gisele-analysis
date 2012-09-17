@@ -122,10 +122,10 @@ module Gisele
         def transition(sexpr, kind = nil)
           raise UnexpectedNodeError, "Node expected, got #{sexpr}" unless Sexpr===sexpr
           case sexpr.first
-          when :task_def     then {:event => "#{sexpr.label}:#{kind}"}
-          when :task_call_st then {:event => "#{sexpr.label}:#{kind}"}
-          when :bool_expr    then {:guard => sexpr.label, 
-                                   :bdd => Boolexpr2BDD.call(session, sexpr)}
+          when :task_def, :task_call_st
+            {:event => "#{sexpr.label}:#{kind}", :guard => one}
+          when :bool_expr
+            {:event => nil, :guard => Boolexpr2BDD.call(session, sexpr)}
           else
             raise UnexpectedNodeError, "Unexpected event kind #{sexpr.inspect}"
           end

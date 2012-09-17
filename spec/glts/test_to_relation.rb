@@ -34,8 +34,8 @@ module Gisele::Analysis
       edges = Relation([
         Tuple(:index => 0, :from => 0, :to => 1, :event => nil, :guard => "not(moving)"),
         Tuple(:index => 1, :from => 0, :to => 2, :event => nil, :guard => "moving"),
-        Tuple(:index => 2, :from => 1, :to => 3, :event => "start", :guard => nil),
-        Tuple(:index => 3, :from => 2, :to => 4, :event => "stop",  :guard => nil),
+        Tuple(:index => 2, :from => 1, :to => 3, :event => "start", :guard => "true"),
+        Tuple(:index => 3, :from => 2, :to => 4, :event => "stop",  :guard => "true"),
       ])
       Relation(:states => states, :edges => edges)
     }

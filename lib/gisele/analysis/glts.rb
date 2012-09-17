@@ -26,7 +26,7 @@ module Gisele::Analysis
 
     def connect(from, to, data)
       data[:symbol] ||= data[:event] || nil
-      data[:bdd]    ||= session.bdd(data[:guard] || true).ref
+      data[:guard]    = session.bdd(data[:guard] || true).ref
       super(from, to, data)
     end
 
@@ -35,6 +35,8 @@ module Gisele::Analysis
     end
 
     ### OUTPUT ###########################################################################
+
+    TO_DNF_OPERATORS = {:not => 'not', :or => 'or', :and => 'and'}
 
     def to_dot
       super(false) do |elm, kind|
@@ -68,10 +70,9 @@ module Gisele::Analysis
         s, t = e.source.index, e.target.index
         event, guard = e[:event], e[:guard]
         event = event.inspect if event
-        guard = (guard.nil? or guard=="true") ? nil : guard.inspect
         buf << "  g.connect #{e.source.index}, #{e.target.index}"
+        buf << ", :guard => #{guard.to_dnf(TO_DNF_OPERATORS).inspect}"
         buf << ", :event => #{event}" if event
-        buf << ", :guard => #{guard}" if guard
         buf << "\n"
       end
       buf << "end\n"
@@ -84,7 +85,7 @@ module Gisele::Analysis
       }
       edges = Relation self.edges.map{|e|
         {:index => e.index, :from => e.source.index, :to => e.target.index,
-         :event => e[:event], :guard => e[:guard]}
+         :event => e[:event], :guard => e[:guard].to_dnf(TO_DNF_OPERATORS)}
       }
       Relation(:states => states, :edges => edges)
     end
@@ -93,7 +94,7 @@ module Gisele::Analysis
 
     def edge_label(e)
       event   = e[:event]
-      guard   = e[:guard] && "[#{e[:guard]}]"
+      guard   = (e[:guard] == one) ? nil : "[#{e[:guard].to_dnf(TO_DNF_OPERATORS)}]"
       [guard, event].compact.map(&:to_s).join(' / ')
     end
 

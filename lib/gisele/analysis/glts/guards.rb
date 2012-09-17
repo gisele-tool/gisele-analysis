@@ -22,9 +22,9 @@ module Gisele::Analysis
     def apply_on_guards!
       invariants!
       each_edge do |e|
-        new_guard = yield(e[:bdd], e.source[:invariant]).ref
-        e[:bdd].deref
-        e[:bdd], e[:guard] = new_guard, new_guard.to_dnf
+        new_guard = yield(e[:guard], e.source[:invariant]).ref
+        e[:guard].deref
+        e[:guard] = new_guard
       end
       self
     end

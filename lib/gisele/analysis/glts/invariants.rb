@@ -18,7 +18,7 @@ module Gisele::Analysis
 
       def propagate(deco, edge)
         event = edge[:event]
-        deco  = (deco & edge[:bdd]).ref
+        deco  = (deco & edge[:guard]).ref
         session.variables.each do |var|
           old_deco, deco = deco, var.apply_on_invariant(deco, event)
           deco.ref

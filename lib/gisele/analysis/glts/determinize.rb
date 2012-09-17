@@ -30,7 +30,7 @@ module Gisele::Analysis
         while sources = to_explore.shift
           remap(sources).each_pair do |event, (guard, targets)|
             next if guard == zero
-            marks = {:event => event, :guard => guard.to_dnf, :bdd => guard}
+            marks = {:event => event, :guard => guard}
             @target.connect(mapping[sources], mapping[targets], marks)
           end
         end
@@ -53,7 +53,7 @@ module Gisele::Analysis
             target.out_edges.each do |edge|
               next unless event=edge[:event]
               p_guard, p_states = map[event]
-              n_guard, n_states = p_guard | (guard & edge[:bdd]), p_states | [edge.target]
+              n_guard, n_states = p_guard | (guard & edge[:guard]), p_states | [edge.target]
               map[event] = [ n_guard, n_states ]
             end
           end

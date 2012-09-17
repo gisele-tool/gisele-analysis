@@ -25,7 +25,9 @@ module Gisele::Analysis
     end
 
     def ghmsc(&bl)
-      ghmscs << Ghmsc.new(self, &bl)
+      Ghmsc.new(self, &bl).tap do |g|
+        ghmscs << g
+      end
     end
 
     def main_ghmsc

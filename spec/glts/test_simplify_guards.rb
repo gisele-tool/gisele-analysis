@@ -29,7 +29,7 @@ module Gisele::Analysis
     subject{ glts.simplify_guards! }
 
     def guard(i)
-      glts.ith_edge(i)[:bdd]
+      glts.ith_edge(i)[:guard]
     end
 
     it{ should eq(glts) }

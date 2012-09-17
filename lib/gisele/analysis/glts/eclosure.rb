@@ -18,7 +18,7 @@ module Gisele::Analysis
         return EMPTY if edge[:event]
         propagated = {}
         deco.each_pair do |k,v|
-          propagated[k] = (v & edge[:bdd])
+          propagated[k] = (v & edge[:guard])
         end
         propagated
       end
