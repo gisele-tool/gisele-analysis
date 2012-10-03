@@ -26,17 +26,13 @@ module Gisele::Analysis
     attr_writer :ast
 
     def to_graph
-      @graph ||= begin
-        graphs = Compiling::Ast2Graph.call(to_ast)
-        graphs.is_a?(Array) ? graphs.first : graph
-      end
+      @graph ||= Compiling::Ast2Graph.call(to_ast)
     end
     attr_writer :graph
 
     def to_glts
       @glts ||= begin
         glts = Compiling::Ast2Glts.call(session, to_ast)
-        glts = glts.is_a?(Array) ? glts.first : glts
         glts.c0 = @c0 if @c0
         glts
       end

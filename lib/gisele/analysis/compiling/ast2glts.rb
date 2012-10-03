@@ -7,10 +7,7 @@ module Gisele
         use Language::ElsifFlattener
 
         def on_unit_def(sexpr)
-          sexpr.
-            sexpr_body.
-            select{|n| n.first == :task_def}.
-            map{|taskdef| apply(taskdef) }
+          apply(sexpr[1])
         end
 
         def on_task_def(sexpr)

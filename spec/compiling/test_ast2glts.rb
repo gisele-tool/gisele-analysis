@@ -16,11 +16,10 @@ module Gisele
 
         subject{ Ast2Glts.call(@session, process) }
 
-        it 'should return a singleton with the expected glts' do
-          subject.should be_a(Array)
-          (glts = subject.first).should be_a(Glts)
-          glts.state_count.should eq(35)
-          glts.edge_count.should eq(36)
+        it 'should return the expected glts' do
+          subject.should be_a(Glts)
+          subject.state_count.should eq(35)
+          subject.edge_count.should eq(36)
         end
 
       end
