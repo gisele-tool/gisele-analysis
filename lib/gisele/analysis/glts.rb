@@ -102,6 +102,7 @@ module Gisele::Analysis
 end # module Gisele
 require_relative 'glts/eclosure'
 require_relative 'glts/determinize'
+require_relative 'glts/minimize'
 require_relative 'glts/equivalence'
 require_relative 'glts/invariants'
 require_relative 'glts/guards'
