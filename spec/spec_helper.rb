@@ -1,5 +1,23 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'gisele-analysis'
+require 'letters'
+
+module Gisele
+  module Analysis
+    class Glts
+
+      def o(name = "glts")
+        tap do
+          Path("#{name}.dot").write(to_dot)
+          `dot -Tgif -o #{name}.gif #{name}.dot`
+          Path("#{name}.dot").unlink
+          puts "!!! Glts printed to #{name}.gif !!!"
+        end
+      end
+
+    end
+  end
+end
 
 module SpecHelpers
   include Gisele::Analysis::Mixin::BddManagement
