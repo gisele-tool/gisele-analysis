@@ -30,7 +30,8 @@ module Gisele::Analysis
       super(from, to, data)
     end
 
-    def dup(glts = Glts.new(session))
+    def dup(glts = nil)
+      glts ||= Glts.new(session){|g| g.c0 = self.c0}
       super(glts)
     end
 

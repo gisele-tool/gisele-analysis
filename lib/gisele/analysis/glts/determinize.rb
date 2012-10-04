@@ -6,7 +6,7 @@ module Gisele::Analysis
       def initialize(source)
         @session = source.session
         @source  = source.eclosure!
-        @target  = Glts.new(@session)
+        @target  = Glts.new(@session){|g| g.c0 = source.c0 }
         determinize!
       end
       attr_reader :session, :source, :target
