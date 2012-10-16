@@ -38,15 +38,21 @@ module Gisele::Analysis
       attr_reader :threshold
 
       def call(glts)
-        while true
-          best_candidate = glts
-          build_candidates(glts).each do |candidate|
-            next unless candidate.state_count < best_candidate.state_count
-            best_candidate = candidate
-          end
-          return glts unless (glts.state_count - best_candidate.state_count) >= threshold
-          glts = best_candidate
+        while c = get_candidate(glts)
+          glts = c
         end
+        glts
+      end
+
+      def get_candidate(glts)
+        best_candidate = glts
+        build_candidates(glts).each do |candidate|
+          next unless candidate.state_count < best_candidate.state_count
+          next unless (glts.state_count - candidate.state_count) >= threshold
+          best_candidate = candidate
+          return candidate
+        end
+        best_candidate == glts ? nil : best_candidate
       end
 
       def build_candidates(glts, candidates = [])
@@ -55,7 +61,7 @@ module Gisele::Analysis
           ((i+1)...size).each do |j|
             catch (:incompatibility) do
               candidate = glts.dup
-              pair      = candidate.ith_states(i, j)
+              pair = candidate.ith_states(i, j)
               merge!(candidate, *pair)
               candidates << candidate
             end
