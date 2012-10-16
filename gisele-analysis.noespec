@@ -10,7 +10,7 @@ variables:
   upper:
     Gisele::Analysis
   version:
-    0.1.0
+    0.6.0
   summary: |-
     Formal analysis techniques for the gisele process modeling language.
   description: |-
