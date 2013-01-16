@@ -122,7 +122,7 @@ module Gisele::Analysis
     end # class Merge
 
     def merge(other)
-      union = (self + other).determinize
+      union = (self + other).determinize.trim!
       Merge.new.call(union.explicit_guards!).simplify_guards!
     end
     alias :| :merge
