@@ -7,7 +7,6 @@ module Gisele::Analysis
 
       STATE_AGGREGATOR = Stamina::Utils::Aggregator.new{|g|
         g.ignore(:eclosure)
-        g.ignore(:origin)
         g.register(:initial, &:|)
         g.register(:accepting, &:&)
         g.register(:error, &:|)

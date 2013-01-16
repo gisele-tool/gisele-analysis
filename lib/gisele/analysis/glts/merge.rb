@@ -9,12 +9,8 @@ module Gisele::Analysis
         g.register(:accepting, &:&)
         g.register(:error, &:|)
         g.register(:invariant){|v1,v2|
+          throw :incompatibility unless (v1 & v2).zero?
           (v1 | v2).ref
-        }
-        g.register(:origin){|v1, v2|
-          v1, v2 = Array(v1), Array(v2)
-          throw :incompatibility unless (v1 & v2).empty?
-          v1 | v2
         }
         g.default{|v1,v2|
           raise "Unexpected state marks: #{v1} vs. #{v2}" unless v1==v2
@@ -33,22 +29,28 @@ module Gisele::Analysis
       }
 
       def initialize
-        @threshold = 2
+        @threshold = 1
       end
       attr_reader :threshold
 
       def call(glts)
+        glts.o('before')
         while c = get_candidate(glts)
           glts = c
         end
-        glts
+        glts.o('after')
       end
 
       def get_candidate(glts)
         best_candidate = glts
         build_candidates(glts).each do |candidate|
-          next unless candidate.state_count < best_candidate.state_count
-          next unless (glts.state_count - candidate.state_count) >= threshold
+          #next unless candidate.edge_count < glts.edge_count
+          # next unless (glts.state_count - candidate.state_count) >= threshold
+          # next unless candidate.state_count < best_candidate.state_count
+
+          next unless (glts.edge_count - candidate.edge_count) >= threshold
+          next unless candidate.edge_count < best_candidate.edge_count
+
           best_candidate = candidate
           return candidate
         end

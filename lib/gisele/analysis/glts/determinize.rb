@@ -71,7 +71,6 @@ module Gisele::Analysis
             when :initial   then v1 | v2
             when :error     then v1 | v2
             when :accepting then v1 | v2
-            when :origin    then Array(v1) | Array(v2)
             else
               raise "Unexpected state mark (#{k.inspect}): `#{v1}` vs. `#{v2}`" unless v1==v2
               v1
