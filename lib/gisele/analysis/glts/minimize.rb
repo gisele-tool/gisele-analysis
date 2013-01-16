@@ -73,7 +73,7 @@ module Gisele::Analysis
       def compatible_edges?(e, f)
         (e.target == f.target) &&
         compatible_instances?(e, f) &&
-        compatible_instances?(e, f)
+        compatible_instances?(f, e)
       end
 
       def compatible_instances?(e, f)
@@ -91,7 +91,7 @@ module Gisele::Analysis
     end
 
     def minimize!
-      Minimize.new.call(simplify_guards!)
+      Minimize.new.call(trim!.simplify_guards!)
     end
 
   end # class Glts
