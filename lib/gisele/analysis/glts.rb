@@ -35,6 +35,10 @@ module Gisele::Analysis
       super(glts)
     end
 
+    def end_state
+      states.find{|s| s.out_edges.empty? }
+    end
+
     ### OUTPUT ###########################################################################
 
     TO_DNF_OPERATORS = {:not => 'not', :or => 'or', :and => 'and'}
