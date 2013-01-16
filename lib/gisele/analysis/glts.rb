@@ -21,13 +21,13 @@ module Gisele::Analysis
 
     def add_state(data = {})
       data[:accepting] = true
-      super
+      super.extend(State)
     end
 
     def connect(from, to, data)
       data[:symbol] ||= data[:event] || nil
       data[:guard]    = session.bdd(data[:guard] || true).ref
-      super(from, to, data)
+      super(from, to, data).extend(Edge)
     end
 
     def dup(glts = nil)
@@ -90,6 +90,9 @@ module Gisele::Analysis
 
   end # class Glts
 end # module Gisele
+require_relative 'glts/state'
+require_relative 'glts/edge'
+
 require_relative 'glts/eclosure'
 require_relative 'glts/determinize'
 require_relative 'glts/minimize'

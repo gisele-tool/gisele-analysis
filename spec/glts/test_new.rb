@@ -14,6 +14,18 @@ module Gisele::Analysis
       subject.should be_a(Glts)
     end
 
+    it 'extends states with the State module' do
+      subject.states.all?{|s|
+        (Glts::State === s).should be_true
+      }
+    end
+
+    it 'extends edges with the Edge module' do
+      subject.edges.all?{|s|
+        (Glts::Edge === s).should be_true
+      }
+    end
+
     it 'sets the symbols correctly' do
       subject.ith_edge(0)[:symbol].should eq("start")
       subject.ith_edge(1)[:symbol].should be_nil
