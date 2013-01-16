@@ -98,6 +98,7 @@ require_relative 'glts/state'
 require_relative 'glts/edge'
 
 require_relative 'glts/eclosure'
+require_relative 'glts/tclosure'
 require_relative 'glts/determinize'
 require_relative 'glts/minimize'
 require_relative 'glts/equivalence'
