@@ -27,6 +27,10 @@ module Gisele::Analysis
         ine.start_event? and oute.end_event? and ine.task_name == oute.task_name
       end
 
+      def decision?
+        out_edges.all?{|e| e.guarded? }
+      end
+
       def binary_decision?
         return false unless out_edges.size == 2 and out_edges.all?{|e| e.guarded? }
         e1, e2 = out_edges

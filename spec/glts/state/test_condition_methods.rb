@@ -31,15 +31,37 @@ module Gisele::Analysis
         glts.ith_state(i)
       end
 
-      describe 'binary_decision?' do
+      describe 'decision?' do
 
-        it 'returns true on a valid state' do
-          state(0).should be_binary_decision
+        it 'returns true on binary_decision' do
+          state(0).should be_decision
+        end
+
+        it 'returns true on nary_decision' do
+          state(3).should be_decision
         end
 
         it 'returns false on all invalid states' do
           glts.states.each do |state|
-            next if [0].include?(state.index)
+            next if [0, 3].include?(state.index)
+            state.should_not be_binary_decision
+          end
+        end
+      end
+
+      describe 'binary_decision?' do
+
+        it 'returns true on a binary decision state' do
+          state(0).should be_binary_decision
+        end
+
+        it 'returns false on a nary decision state' do
+          state(3).should_not be_binary_decision
+        end
+
+        it 'returns false on all invalid states' do
+          glts.states.each do |state|
+            next if [0, 3].include?(state.index)
             state.should_not be_binary_decision
           end
         end
