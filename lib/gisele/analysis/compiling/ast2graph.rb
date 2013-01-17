@@ -95,7 +95,6 @@ module Gisele
           [entry, exit]
         end
 
-
         def on_while_st(sexpr)
           cond, dost, = sexpr.sexpr_body
 
@@ -118,6 +117,12 @@ module Gisele
           task = add_vertex(sexpr)
           connect(entry, task)
           connect(task, exit)
+          [entry, exit]
+        end
+
+        def on_nop_st(sexpr)
+          entry, exit = entry_and_exit(sexpr)
+          connect(entry, exit)
           [entry, exit]
         end
 
