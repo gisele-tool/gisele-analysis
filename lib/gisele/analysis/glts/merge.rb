@@ -34,11 +34,10 @@ module Gisele::Analysis
       attr_reader :threshold
 
       def call(glts)
-        glts.o('before')
         while c = get_candidate(glts)
           glts = c
         end
-        glts.o('after')
+        glts
       end
 
       def get_candidate(glts)
