@@ -21,7 +21,11 @@ module Gisele::Analysis
     end
 
     def to_ast
-      @ast ||= Gisele.ast(source)
+      @ast ||= if source
+        Gisele.ast(source)
+      elsif @glts
+        @glts.to_ast
+      end
     end
     attr_writer :ast
 

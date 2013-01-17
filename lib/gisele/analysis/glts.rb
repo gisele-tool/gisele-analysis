@@ -84,6 +84,10 @@ module Gisele::Analysis
       buf
     end
 
+    def to_ast
+      Compiling::Glts2Ast.call(self)
+    end
+
   private
 
     def edge_label(e)
