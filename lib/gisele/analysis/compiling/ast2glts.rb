@@ -17,10 +17,10 @@ module Gisele
           exit  = add_state(sexpr)
 
           c_entry, c_exit = apply(sexpr.last)
-          connect(entry, c_entry)
-          connect(c_exit, exit)
-          # connect(entry, c_entry, transition(sexpr, "start"))
-          # connect(c_exit, exit, transition(sexpr, "end"))
+          # connect(entry, c_entry)
+          # connect(c_exit, exit)
+          connect(entry, c_entry, transition(sexpr, "start"))
+          connect(c_exit, exit, transition(sexpr, "end"))
 
           @glts
         end
