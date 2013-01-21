@@ -19,8 +19,8 @@ module Gisele::Analysis
       #   g.add_n_states 4
       #   g.connect 0, 1, :guard => "not(moving)"
       #   g.connect 0, 2, :guard => "moving"
-      #   g.connect 1, 3, :guard => "true", :event => "start"
-      #   g.connect 2, 4, :guard => "true", :event => "stop"
+      #   g.connect 1, 3, :event => "start"
+      #   g.connect 2, 4, :event => "stop"
       # end
       SRC
     }

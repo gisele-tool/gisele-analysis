@@ -76,7 +76,7 @@ module Gisele::Analysis
         event, guard = e[:event], e[:guard]
         event = event.inspect if event
         buf << "  g.connect #{e.source.index}, #{e.target.index}"
-        buf << ", :guard => #{guard.to_dnf(TO_DNF_OPERATORS).inspect}"
+        buf << ", :guard => #{e.to_dnf.inspect}" unless guard.one?
         buf << ", :event => #{event}" if event
         buf << "\n"
       end
