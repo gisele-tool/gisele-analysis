@@ -5,6 +5,11 @@ module Gisele::Analysis
 
       STATE_AGGREGATOR = Stamina::Utils::Aggregator.new{|g|
         g.ignore(:eclosure)
+        g.register(:origin){|v1, v2|
+          v1, v2 = Array(v1), Array(v2)
+          throw :incompatibility unless (v1 & v2).empty?
+          v1 | v2
+        }
         g.register(:initial, &:|)
         g.register(:accepting, &:&)
         g.register(:error, &:|)
@@ -60,6 +65,7 @@ module Gisele::Analysis
         size = glts.states.size
         (0...size).each do |i|
           ((i+1)...size).each do |j|
+            next unless compatibles?(glts, i, j)
             catch (:incompatibility) do
               candidate = glts.dup
               pair = candidate.ith_states(i, j)
@@ -69,6 +75,12 @@ module Gisele::Analysis
           end
         end
         candidates
+      end
+
+      def compatibles?(glts, i, j)
+        s, t = glts.ith_states(i, j)
+        v1, v2 = Array(s[:origin]), Array(t[:origin])
+        (v1 & v2).empty?
       end
 
       def merge!(glts, s, t)
