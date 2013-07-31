@@ -125,7 +125,6 @@ Gem::Specification.new do |s|
   #
   s.add_development_dependency("rake", "~> 0.9.2")
   s.add_development_dependency("rspec", "~> 2.11")
-  s.add_development_dependency("letters", "~> 0.3.1")
   s.add_dependency("gisele-language", "~> 0.6.0")
   s.add_dependency("stamina-core", "~> 0.6.1")
   s.add_dependency("cudd-rb", "~> 0.0.2")

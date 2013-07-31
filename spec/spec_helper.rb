@@ -1,6 +1,5 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'gisele-analysis'
-require 'letters'
 
 module Gisele
   module Analysis

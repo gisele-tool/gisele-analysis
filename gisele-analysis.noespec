@@ -23,7 +23,6 @@ variables:
   dependencies:
     - {name: rake,            version: "~> 0.9.2",  groups: [development]}
     - {name: rspec,           version: "~> 2.11",   groups: [development]}
-    - {name: letters,         version: "~> 0.3.1",  groups: [development]}
     - {name: gisele-language, version: "~> 0.6.0",  groups: [runtime]}
     - {name: stamina-core,    version: "~> 0.6.1",  groups: [runtime]}
     - {name: cudd-rb,         version: "~> 0.0.2",  groups: [runtime]}

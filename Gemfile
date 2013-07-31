@@ -3,7 +3,6 @@ source 'http://rubygems.org'
 group :development do
   gem "rake", "~> 0.9.2"
   gem "rspec", "~> 2.11"
-  gem "letters", "~> 0.3.1"
 end
 
 group :runtime do
