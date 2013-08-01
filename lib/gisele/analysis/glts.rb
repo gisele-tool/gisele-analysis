@@ -24,7 +24,7 @@ module Gisele::Analysis
       super.extend(State)
     end
 
-    def connect(from, to, data)
+    def connect(from, to, data = {})
       data[:symbol] ||= data[:event] || nil
       data[:guard]    = session.bdd(data[:guard] || true).ref
       super(from, to, data).extend(Edge)
