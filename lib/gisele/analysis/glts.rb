@@ -47,7 +47,7 @@ module Gisele::Analysis
       super(false) do |elm, kind|
         case kind
           when :automaton
-            {:rankdir => "LR",
+            {:rankdir => "TB",
              :margin  => "0",
              :pack    => "true",
              :ranksep => "0"}
