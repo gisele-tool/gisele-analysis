@@ -8,6 +8,8 @@ end
 group :runtime do
   gem "gisele-language", "~> 0.6.0"
   gem "stamina-core", "~> 0.6.1"
-  gem "cudd-rb", "~> 0.0.2"
+  #gem "cudd-rb", "~> 0.0.2"
+  #gem "cudd-rb", path: "../cudd-rb"
+  gem "cudd-rb", git: "git://github.com/blambeau/cudd-rb"
   gem "yargi", "~> 0.2.0"
 end
