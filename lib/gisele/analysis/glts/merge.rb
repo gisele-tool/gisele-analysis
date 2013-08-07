@@ -33,35 +33,36 @@ module Gisele::Analysis
         }
       }
 
-      def initialize
+      def initialize(session)
+        @session = session
         @threshold = 1
       end
-      attr_reader :threshold
+      attr_reader :session, :threshold
 
-      def call(glts)
+      def call(gltss)
+        glts = Union.new(session).call(gltss)
+        glts = glts.determinize
+        glts = glts.explicit_guards!
         while c = get_candidate(glts)
           glts = c
         end
+        glts = glts.minimize
+        glts = glts.simplify_guards!
         glts
       end
 
       def get_candidate(glts)
         best_candidate = glts
-        build_candidates(glts).each do |candidate|
-          #next unless candidate.edge_count < glts.edge_count
-          # next unless (glts.state_count - candidate.state_count) >= threshold
-          # next unless candidate.state_count < best_candidate.state_count
-
-          next unless (glts.edge_count - candidate.edge_count) >= threshold
-          next unless candidate.edge_count < best_candidate.edge_count
-
+        build_candidates(glts) do |candidate, i, j|
+          #STDERR << "."
+          next unless candidate.state_count < best_candidate.state_count
+          next unless (glts.state_count - candidate.state_count) >= threshold
           best_candidate = candidate
-          return candidate
         end
         best_candidate == glts ? nil : best_candidate
       end
 
-      def build_candidates(glts, candidates = [])
+      def build_candidates(glts)
         size = glts.states.size
         (0...size).each do |i|
           ((i+1)...size).each do |j|
@@ -70,17 +71,26 @@ module Gisele::Analysis
               candidate = glts.dup
               pair = candidate.ith_states(i, j)
               merge!(candidate, *pair)
-              candidates << candidate
+              yield(candidate, i, j)
             end
           end
         end
-        candidates
       end
 
       def compatibles?(glts, i, j)
         s, t = glts.ith_states(i, j)
+        return false unless different_origins?(glts, s, t)
+        return false if no_shared_event?(glts, s, t)
+        true
+      end
+
+      def different_origins?(glts, s, t)
         v1, v2 = Array(s[:origin]), Array(t[:origin])
         (v1 & v2).empty?
+      end
+
+      def no_shared_event?(glts, s, t)
+        (s.out_symbols & t.out_symbols).empty?
       end
 
       def merge!(glts, s, t)
@@ -133,8 +143,7 @@ module Gisele::Analysis
     end # class Merge
 
     def merge(other)
-      union = (self + other).determinize.trim!
-      Merge.new.call(union.explicit_guards!).simplify_guards!
+      Merge.new(self.session).call([self, other])
     end
     alias :| :merge
 
