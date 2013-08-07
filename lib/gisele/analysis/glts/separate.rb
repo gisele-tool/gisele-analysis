@@ -6,6 +6,8 @@ module Gisele::Analysis
     end
 
     def separate!
+      @guards_mode = nil
+      @invariants_generated = nil
       edges.dup.each do |e|
         next if e[:guard] == one
         middle = add_state(:initial => false)

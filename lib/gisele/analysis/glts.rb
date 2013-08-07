@@ -16,6 +16,8 @@ module Gisele::Analysis
     end
 
     def c0=(c0)
+      @guards_mode = nil
+      @invariants_generated = nil
       @c0 = session.bdd(c0)
     end
 
