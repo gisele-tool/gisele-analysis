@@ -77,7 +77,14 @@ module Gisele::Analysis
       end
 
       def compatible_instances?(e, f)
-        (e.source[:invariant] & e[:guard]) == (e.source[:invariant] & (e[:guard] | f[:guard]))
+        left  = (e.source[:invariant] & e[:guard]).ref
+        disj  = (e[:guard] | f[:guard]).ref
+        right = (e.source[:invariant] & disj).ref
+        (left == right).tap{
+          left.deref
+          disj.deref
+          right.deref
+        }
       end
 
       def edge_map(edges)
