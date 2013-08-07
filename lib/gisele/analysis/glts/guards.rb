@@ -3,7 +3,9 @@ module Gisele::Analysis
 
     def explicit_guards!
       unless @guards_mode == :explicit
-        apply_on_guards!{|g, inv| g & inv }
+        apply_on_guards!{|g, inv|
+          g & inv
+        }
         @guards_mode = :explicit
       end
       self
@@ -11,7 +13,12 @@ module Gisele::Analysis
 
     def simplify_guards!
       unless @guards_mode == :simplified
-        apply_on_guards!{|g, inv| g.restrict(inv) }
+        apply_on_guards!{|g, inv|
+          conj = (g & inv).ref
+          result = conj.restrict(inv)
+          conj.deref
+          result
+        }
         @guards_mode = :simplified
       end
       self
