@@ -125,16 +125,18 @@ module Gisele::Analysis
         delta = Hash.new{|h,k| h[k] = [] }
         s.out_edges.each{|e| delta[e[:event]] << e}
         delta.values.each do |(e,f)|
-          next if f.nil?
+          next if f.nil? or f.index == -1 or e.index == -1
 
           # take edge targets, through representors
           t1, t2 = e.target, f.target
           t1 = t1[:representor] while t1[:representor]
           t2 = t2[:representor] while t2[:representor]
 
-          # drop edges and reconnect
+          # drop edges
           edge_data = EDGE_AGGREGATOR.merge(e.data, f.data)
           glts.drop_edges(e, f)
+
+          # reconnect to the new target state, merging recursively if needed
           new_target = (t1==t2 ? t1 : merge!(glts, t1, t2))
           glts.connect(s, new_target, edge_data)
         end
