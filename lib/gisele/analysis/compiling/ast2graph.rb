@@ -126,7 +126,7 @@ module Gisele
           [entry, exit]
         end
 
-        private
+      private
 
         def add_vertex(sexpr)
           @graph.add_vertex(dot_attributes(sexpr))
