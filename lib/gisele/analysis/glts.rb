@@ -10,9 +10,7 @@ module Gisele::Analysis
     end
 
     def c0
-      with_bdd session.c0_from_variables do |s_c0|
-        (@c0 || one) & s_c0
-      end
+      @c0 || session.c0_from_variables
     end
 
     def c0=(c0)
