@@ -7,7 +7,8 @@ module Gisele::Analysis
         return nil unless e[:event].nil?
 
         # Returns the guard as DNF
-        e[:guard] && e[:guard].to_dnf
+        p, dnf = e[:prefered_guard_label], (e[:guard] && e[:guard].to_dnf)
+        p || dnf
       }
 
       # Only a start event, no guard.
@@ -155,7 +156,7 @@ module Gisele::Analysis
         # Convert if/then/else as better diamonds
         graph.vertices(IF_THEN_ELSE_STATE).add_marks{|v|
           t_edge,  e_edge  = v.out_edges
-          t_guard, e_guard = v.out_edges.map{|e| e[:guard].to_dnf }
+          t_guard, e_guard = v.out_edges.map(&GUARD_EDGE)
           if t_guard.length > e_guard.length
             t_edge,  e_edge  = e_edge, t_edge
             t_guard, e_guard = e_guard, t_guard
