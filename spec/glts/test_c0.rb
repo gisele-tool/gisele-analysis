@@ -26,8 +26,8 @@ module Gisele::Analysis
         glts.c0 = "specific"
       end
 
-      it 'computes the conjunction of both c0s' do
-        subject.should eq(s.c0_from_variables & s.bdd("specific"))
+      it 'takes it as is' do
+        subject.should eq(s.bdd("specific"))
       end
     end
 
