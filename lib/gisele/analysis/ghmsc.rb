@@ -47,6 +47,14 @@ module Gisele::Analysis
       to_graph.to_dot
     end
 
+    def task_count
+      to_graph.vertices(->(v){ v["shape"] == "box" }).size
+    end
+
+    def decision_count
+      to_graph.vertices(->(v){ v["shape"] == "diamond" }).size
+    end
+
     def merge(other)
       Ghmsc.new(session) do |g|
         g.glts = to_glts | other.to_glts
