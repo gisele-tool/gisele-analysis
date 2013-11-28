@@ -88,6 +88,15 @@ module Gisele::Analysis
       Compiling::Glts2Ast.call(self)
     end
 
+    def o(name = "glts")
+      tap do
+        Path("#{name}.dot").write(to_dot)
+        `dot -Tgif -o #{name}.gif #{name}.dot`
+        Path("#{name}.dot").unlink
+        puts "!!! Glts printed to #{name}.gif !!!"
+      end
+    end
+
   private
 
     def edge_label(e)
